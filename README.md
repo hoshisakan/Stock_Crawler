@@ -41,6 +41,12 @@ optional arguments:
 ### 輸出資料夾
 ![alt text](https://imgur.com/SNMz0I3.png)
 
+### 輸出 CSV 檔案
+
+* 2317.TW (鴻海)
+
+![alt text](https://imgur.com/dp3Y39K.png)
+
 * 將 python 檔案製作成一個 .exe 檔案
 
 > -p 會將執行檔需要的模組一起包進去，若沒有加會導致執行檔無法找到其模組
