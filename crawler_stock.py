@@ -10,7 +10,7 @@ import pandas as pd
 from instance.config import Initialization as Init
 import math
 from threading import Thread
-
+from decimal import Decimal, ROUND_HALF_UP
 
 logger = Loggings()
 
@@ -54,7 +54,7 @@ class Stock():
         return str(check_val).lower().find("nan")
 
     def __round_down(self, f):
-        return math.floor(f * 100) / 100
+        return Decimal(str(f)).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP)
 
     def __regular_data_for_api_v7(self, cols, rows):
         result = []
@@ -127,7 +127,9 @@ class Stock():
             df = pd.DataFrame(result['json_rows'])
             df.to_csv(f"{self.__output_path}/{self.__ticker}.csv", encoding='utf-8-sig', index=False)
             logger.info(f'Finish get ticker {self.__ticker} history records')
-        return result
+        result.clear()
+        rows.clear()
+        info.clear()
 
     def obtain_history_records_v2(self, start=None, end=None):
         result = {}
@@ -174,7 +176,9 @@ class Stock():
             df = pd.DataFrame(result['json_rows'])
             df.to_csv(f"{self.__output_path}/{self.__ticker}.csv", encoding='utf-8-sig', index=False)
             logger.info(f'Finish get ticker {self.__ticker} history records')
-        return result
+        result.clear()
+        rows.clear()
+        info.clear()
 
 def run_job():
     stock_crawler_target_list = []
