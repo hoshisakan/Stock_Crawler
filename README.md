@@ -1,6 +1,6 @@
 # Stock Crawler
 
-## 透過 yahoo finance api 撈取股價資訊
+## 透過 Yahoo Finance API 撈取股價資訊
 
 ![alt text](https://imgur.com/SEyXbAC.png)
 
