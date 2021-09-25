@@ -102,7 +102,7 @@ class Stock():
             start_date = int(DT.get_datetime_convert_to_timestamp(start))
             end_date = int(DT.get_datetime_convert_to_timestamp(end))
 
-            logger.warning(f'Starting ticker {self.__ticker} history records')
+            logger.info(f'Starting ticker {self.__ticker} history records')
             full_url = f'{self.__base_url}v7/finance/download/{self.__ticker}?period1={start_date}&period2={end_date}&interval=1d&events=history'
             df = pd.read_csv(full_url)
             rows = list(df.itertuples(index=False))
@@ -126,7 +126,7 @@ class Stock():
         finally:
             df = pd.DataFrame(result['json_rows'])
             df.to_csv(f"{self.__output_path}/{self.__ticker}.csv", encoding='utf-8-sig', index=False)
-            logger.warning(f'Finish get ticker {self.__ticker} history records')
+            logger.info(f'Finish get ticker {self.__ticker} history records')
         return result
 
     def obtain_history_records_v2(self, start=None, end=None):
@@ -138,7 +138,7 @@ class Stock():
             start_date = int(DT.get_datetime_convert_to_timestamp(start))
             end_date = int(DT.get_datetime_convert_to_timestamp(end))
 
-            logger.warning(f'Staring get ticker {self.__ticker} history records')
+            logger.info(f'Staring get ticker {self.__ticker} history records')
             full_url = f'{self.__base_url}v8/finance/chart/{self.__ticker}?symbol={self.__ticker}&period1={start_date}&period2={end_date}&interval=1d&events=history'
             logger.warning(f'Request yahoo finance api v8 endpoint: {full_url}')
             validate_url = f'https://finance.yahoo.com/quote/{self.__ticker}/history?&period1={start_date}&period2={end_date}&interval=1d&filter=history&frequency=1d&includeAdjustedClose=true'
@@ -173,7 +173,7 @@ class Stock():
         finally:
             df = pd.DataFrame(result['json_rows'])
             df.to_csv(f"{self.__output_path}/{self.__ticker}.csv", encoding='utf-8-sig', index=False)
-            logger.warning(f'Finish get ticker {self.__ticker} history records')
+            logger.info(f'Finish get ticker {self.__ticker} history records')
         return result
 
 def run_job():

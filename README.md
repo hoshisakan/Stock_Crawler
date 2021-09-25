@@ -2,7 +2,7 @@
 
 ## 透過 yahoo finance api 撈取股價資訊
 
-![alt text](https://imgur.com/ISkz1vk.png)
+![alt text](https://imgur.com/SEyXbAC.png)
 
 ## 教學
 ### 套件安裝
@@ -28,10 +28,15 @@ python crawler_stock.py -t D:\Files\Project\Stock_Crawler\stock_info_list.txt -o
 ```
 > 若想要了解引數的作用，可輸入 python crawler_stock.py --help 查看
 
-![alt text](https://imgur.com/odK3a5C.png)
+```
+optional arguments:
+  -h, --help            show this help message and exit
+  -t TASK, --task TASK  stock ticker and country list
+  -o OUTPUT, --output OUTPUT  stock info output path
+```
 
 ### 執行畫面
-![alt text](https://imgur.com/ez6V7gv.png)
+![alt text](https://imgur.com/F2fYuOY.png)
 
 ### 輸出資料夾
 ![alt text](https://imgur.com/SNMz0I3.png)
@@ -43,8 +48,7 @@ python crawler_stock.py -t D:\Files\Project\Stock_Crawler\stock_info_list.txt -o
 ```
 pyinstaller.exe --specpath ./execute/ --distpath ./execute/dist --workpath ./execute/build -p "D:\Files\Project\Stock_Crawler\module;." -D crawler_stock.py
 ```
-![alt text](https://imgur.com/hwHENrW.png)
-![alt text](https://imgur.com/BgDobux.png)
+![alt text](https://imgur.com/m35Aun6.png)
 
 * 另外，也有將 python 的檔案包成一個執行檔讓批次檔 (.bat) 去執行，同樣要給予引數，引述部分請參閱上方的執行範例，這裡就不再贅述
 
@@ -53,7 +57,7 @@ pyinstaller.exe --specpath ./execute/ --distpath ./execute/dist --workpath ./exe
 call D:\Files\Project\Stock_Crawler\execute\dist\crawler_stock\crawler_stock.exe -t C:\Users\YiQuan\Desktop\stock_info_list.txt -o D:\Files\Project\Output\stock
 ```
 
-![alt text](https://imgur.com/ljOSv2Y.png)
+![alt text](https://imgur.com/gU0sVEz.png)
 
 # 執行環境
 * Python 3.7.6
