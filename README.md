@@ -47,9 +47,7 @@ optional arguments:
 
 ![alt text](https://imgur.com/dp3Y39K.png)
 
-* 將 python 檔案製作成一個 .exe 檔案
-
-> -p 會將執行檔需要的模組一起包進去，若沒有加會導致執行檔無法找到其模組
+* 將 python 打包成一個 .exe 的可執行檔
 
 ```
 pyinstaller.exe --specpath ./execute/ --distpath ./execute/dist --workpath ./execute/build -F crawler_stock.py
