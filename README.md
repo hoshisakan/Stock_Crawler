@@ -19,6 +19,8 @@ pip install -r requirements.txt
 2317.TW,2020-09-01,2021-09-25
 2330.TW,2020-09-01,2021-09-25
 6758.T,2020-09-01,2021-09-25
+7974.T,2020-09-01,2021-09-25
+7203.T,2020-09-01,2021-09-25
 ```
 
 * 撈取一個 (以上) 公司的股價
@@ -40,7 +42,7 @@ optional arguments:
 ![alt text](https://imgur.com/h6zlr76.png)
 
 ### 輸出資料夾
-![alt text](https://imgur.com/SNMz0I3.png)
+![alt text](https://imgur.com/zBTKldR.png)
 
 ### 輸出 CSV 檔案
 
@@ -55,7 +57,7 @@ pyinstaller.exe --specpath ./execute/ --distpath ./execute/dist --workpath ./exe
 ```
 ![alt text](https://imgur.com/m35Aun6.png)
 
-* 另外，也有將 python 的檔案包成一個執行檔讓批次檔 (.bat) 去執行，同樣要給予引數，引述部分請參閱上方的執行範例，這裡就不再贅述
+* 另外，也有將 python 的檔案包成一個執行檔讓批次檔 (.bat) 去執行，同樣要給予引數，引數部分請參閱上方的執行範例，這裡就不再贅述
 
 > 執行過程會紀錄在 log 檔中，若需要查看執行過程，可至 {專案路徑}\execute\dist\crawler_stock\matplotlib\mpl-data\logs 的路徑中
 ```
