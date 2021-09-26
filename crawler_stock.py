@@ -123,15 +123,14 @@ class Stock():
                 if self.__output_path is None:
                     raise FileNotFoundError('Output path is required.')
                 self.__check_path_exists_and_create(self.__output_path)
-        except (FileNotFoundError, OSError) as fe:
-            logger.error(HandleException.show_exp_detail_message(fe))
-        except Exception as e:
+        except (FileNotFoundError, OSError, Exception) as e:
             logger.error(HandleException.show_exp_detail_message(e))
         else:
             full_path = f"{self.__output_path}\\{self.__ticker}.csv"
             self.__check_path_exists_and_remove(full_path)
             df = pd.DataFrame(result['json_rows'])
             df.to_csv(full_path, encoding='utf-8-sig', index=False)
+            logger.info(f'Create ticker {self.__ticker} csv file successful!')
         result.clear()
         rows.clear()
         info.clear()

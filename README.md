@@ -2,7 +2,7 @@
 
 ## 透過 Yahoo Finance API 撈取股價資訊
 
-![alt text](https://imgur.com/SEyXbAC.png)
+![alt text](https://imgur.com/9mefRne.png)
 
 ## 教學
 ### 套件安裝
