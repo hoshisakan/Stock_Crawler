@@ -52,7 +52,7 @@ optional arguments:
 > -p 會將執行檔需要的模組一起包進去，若沒有加會導致執行檔無法找到其模組
 
 ```
-pyinstaller.exe --specpath ./execute/ --distpath ./execute/dist --workpath ./execute/build -p "D:\Files\Project\Stock_Crawler\module;." -D crawler_stock.py
+pyinstaller.exe --specpath ./execute/ --distpath ./execute/dist --workpath ./execute/build -F crawler_stock.py
 ```
 ![alt text](https://imgur.com/m35Aun6.png)
 

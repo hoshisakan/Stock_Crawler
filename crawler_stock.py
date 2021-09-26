@@ -56,19 +56,6 @@ class Stock():
     def __round_down(self, f):
         return Decimal(str(f)).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP)
 
-    def __regular_data_for_api_v7(self, cols, rows):
-        result = []
-        for data in rows:
-            temp = list(data)
-            temp[1] = 0 if temp[1] is None or self.__check_nan_exists(str(temp[6])) != -1 else self.__round_down(temp[1])
-            temp[2] = 0 if temp[2] is None or self.__check_nan_exists(str(temp[6])) != -1 else self.__round_down(temp[2])
-            temp[3] = 0 if temp[3] is None or self.__check_nan_exists(str(temp[6])) != -1 else self.__round_down(temp[3])
-            temp[4] = 0 if temp[4] is None or self.__check_nan_exists(str(temp[6])) != -1 else self.__round_down(temp[4])
-            temp[5] = 0 if temp[5] is None or self.__check_nan_exists(str(temp[6])) != -1 else self.__round_down(temp[5])
-            temp[6] = 0 if temp[6] is None or self.__check_nan_exists(str(temp[6])) != -1 else int(temp[6])
-            result.append(dict(zip(cols, temp))) if any(temp[1:]) is True else logger.warning(f'{self.__ticker} no data in {temp[0]}')
-        return result
-
     def __regular_data_for_api_v8(self, cols, rows):
         result = []
         for date, open_price, high_price, low_price, close_price, adjclose_price, volume in zip(
@@ -90,50 +77,18 @@ class Stock():
         return result
 
     def __check_path_exists_and_create(self, path):
-        if not os.path.exists(self.__output_path):
-            os.makedirs(self.__output_path)
+        if not os.path.exists(path):
+            os.makedirs(path)
 
-    def obtain_history_records_v1(self, start=None, end=None):
-        result = {}
-        rows = []
-        try:
-            if start is None and end is None:
-                raise Exception('The start date and end date is required')
-            start_date = int(DT.get_datetime_convert_to_timestamp(start))
-            end_date = int(DT.get_datetime_convert_to_timestamp(end))
-
-            logger.info(f'Starting ticker {self.__ticker} history records')
-            full_url = f'{self.__base_url}v7/finance/download/{self.__ticker}?period1={start_date}&period2={end_date}&interval=1d&events=history'
-            df = pd.read_csv(full_url)
-            rows = list(df.itertuples(index=False))
-            logger.warning(f'Request yahoo finance api v7 endpoint: {full_url}')
-            validate_url = f'https://finance.yahoo.com/quote/{self.__ticker}/history?&period1={start_date}&period2={end_date}&interval=1d&filter=history&frequency=1d&includeAdjustedClose=true'
-            logger.warning(f'Validate from yahoo finance api obtain stock info url: {validate_url}')
-
-            if len(rows) > 0:
-                info = sorted(self.__regular_data_for_api_v7(self.__col, rows), key=lambda x: x['trade_date'], reverse=True)
-                result['json_rows'] = info
-                if self.__output_path is None:
-                    raise FileNotFoundError('Output path is required.')
-                self.__check_path_exists_and_create(self.__output_path)
-        except (FileNotFoundError, OSError) as fe:
-            logger.error(HandleException.show_exp_detail_message(fe))
-            self.__output_path = f'{os.path.dirname(__file__)}/output/csv'
-            logger.warning(f'Replace error path: {self.__output_path}')
-            self.__check_path_exists_and_create(self.__output_path)
-        except Exception as e:
-            logger.error(HandleException.show_exp_detail_message(e))
-        finally:
-            df = pd.DataFrame(result['json_rows'])
-            df.to_csv(f"{self.__output_path}/{self.__ticker}.csv", encoding='utf-8-sig', index=False)
-            logger.info(f'Finish get ticker {self.__ticker} history records')
-        result.clear()
-        rows.clear()
-        info.clear()
+    def __check_path_exists_and_remove(self, path):
+        if os.path.exists(path):
+            os.remove(path)
+            logger.info(f'Removeing duplicate file from path {path}.')
 
     def obtain_history_records_v2(self, start=None, end=None):
-        result = {}
+        result = {'json_rows': ''}
         rows = []
+        info = []
         try:
             if start is None and end is None:
                 raise Exception('The start date and end date is required')
@@ -152,6 +107,8 @@ class Stock():
             ) as res:
                 res_json = res.json()['chart']['result'][0]
                 stock_info = res_json['indicators']['quote'][0]
+                if not res_json or not stock_info:
+                    raise Exception(f'The tikcer {self.__ticker} not found any stock price info.')
                 rows.extend(
                     [
                         res_json['timestamp'], stock_info['open'],
@@ -159,6 +116,7 @@ class Stock():
                         stock_info['close'], res_json['indicators']['adjclose'][0]['adjclose'],
                         stock_info['volume']
                     ])
+            logger.info(f'Finish get ticker {self.__ticker} history records')
             if len(rows) > 0:
                 info = sorted(self.__regular_data_for_api_v8(self.__col, rows), key=lambda x: x['trade_date'], reverse=True)
                 result['json_rows'] = info
@@ -167,15 +125,13 @@ class Stock():
                 self.__check_path_exists_and_create(self.__output_path)
         except (FileNotFoundError, OSError) as fe:
             logger.error(HandleException.show_exp_detail_message(fe))
-            self.__output_path = f'{os.path.dirname(__file__)}/output/csv'
-            logger.warning(f'Replace error path: {self.__output_path}')
-            self.__check_path_exists_and_create(self.__output_path)
         except Exception as e:
             logger.error(HandleException.show_exp_detail_message(e))
-        finally:
+        else:
+            full_path = f"{self.__output_path}\\{self.__ticker}.csv"
+            self.__check_path_exists_and_remove(full_path)
             df = pd.DataFrame(result['json_rows'])
-            df.to_csv(f"{self.__output_path}/{self.__ticker}.csv", encoding='utf-8-sig', index=False)
-            logger.info(f'Finish get ticker {self.__ticker} history records')
+            df.to_csv(full_path, encoding='utf-8-sig', index=False)
         result.clear()
         rows.clear()
         info.clear()

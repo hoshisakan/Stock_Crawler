@@ -1,9 +1,10 @@
 from loguru import logger
 from pathlib import Path
 from module.date import DateTimeTools as DT
+import os
 
-
-log_path = Path(Path.cwd(), "logs")
+# log_path = Path(Path.cwd(), "logs")
+log_path = Path(os.getcwd(), "logs")
 
 class Loggings():
     __instance = None
