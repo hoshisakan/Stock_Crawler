@@ -14,6 +14,7 @@ pip install -r requirements.txt
 
 ## 執行範例
 * 請先建立一個 txt 的檔案，名稱可自行命名，格式如下
+> ticker, start_date, end_date
 ```
 2317.TW,2020-09-01,2021-09-25
 2330.TW,2020-09-01,2021-09-25
@@ -36,7 +37,7 @@ optional arguments:
 ```
 
 ### 執行畫面
-![alt text](https://imgur.com/F2fYuOY.png)
+![alt text](https://imgur.com/h6zlr76.png)
 
 ### 輸出資料夾
 ![alt text](https://imgur.com/SNMz0I3.png)
@@ -61,7 +62,7 @@ pyinstaller.exe --specpath ./execute/ --distpath ./execute/dist --workpath ./exe
 call D:\Files\Project\Stock_Crawler\execute\dist\crawler_stock\crawler_stock.exe -t C:\Users\YiQuan\Desktop\stock_info_list.txt -o D:\Files\Project\Output\stock
 ```
 
-![alt text](https://imgur.com/gU0sVEz.png)
+![alt text](https://imgur.com/FrI55tF.png)
 
 # 執行環境
 * Python 3.7.6
