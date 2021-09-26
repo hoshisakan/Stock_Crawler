@@ -147,16 +147,20 @@ def run_job():
         stock_crawler_target_list = [read.strip().split(',') for read in f.readlines()]
     write_iterator_to_log(stock_crawler_target_list)
 
+    task_job = []
+
     for task_items in stock_crawler_target_list:
-        current_task = []
         obj = Stock(ticker=task_items[0], output_path=Init.output_path)
-        current_task = Thread(
-            target=lambda start, end:obj.obtain_history_records_v2(start, end),
-            kwargs=({'start': f'{task_items[1]} 08:00:00', 'end': f'{task_items[2]} 23:59:59'})
-        )
-        current_task.start()
-        current_task.join()
-        del obj
+        task_job.append(
+            Thread(
+            target=obj.obtain_history_records_v2, args=(f'{task_items[1]} 08:00:00', f'{task_items[2]} 23:59:59')
+        ))
+    
+    for job in task_job:
+        job.start()
+
+    for job in task_job:
+        job.join()
 
 @timer
 def main():
