@@ -8,7 +8,6 @@ from module.reptile import RequestPageSource
 from module.argument_config import ArgumentConfig
 import pandas as pd
 from instance.config import Initialization as Init
-import math
 from threading import Thread
 from decimal import Decimal, ROUND_HALF_UP
 

@@ -50,18 +50,18 @@ optional arguments:
 
 ![alt text](https://imgur.com/dp3Y39K.png)
 
-* 將 python 打包成一個 .exe 的可執行檔
+### 將 python 打包成一個 .exe 的可執行檔
+* 打包時請注意你的 python 環境是乾淨的，避免製作執行檔時將不必要的套件一同匯入，建議使用 [virtualenv](https://pypi.org/project/virtualenv/) 與 [virtualenvwrapper-win](https://pypi.org/project/virtualenvwrapper-win/) 將爬蟲的開發環境區別開來
 
 ```
-pyinstaller.exe --specpath ./execute/ --distpath ./execute/dist --workpath ./execute/build -F crawler_stock.py
+pyinstaller.exe --specpath ./execute/ --distpath ./execute/dist --workpath ./execute/build -D crawler_stock.py
 ```
 ![alt text](https://imgur.com/m35Aun6.png)
 
 * 另外，也有將 python 的檔案包成一個執行檔讓批次檔 (.bat) 去執行，同樣要給予引數，引數部分請參閱上方的執行範例，這裡就不再贅述
 
-> 執行過程會紀錄在 log 檔中，若需要查看執行過程，可至 {專案路徑}\execute\dist\crawler_stock\matplotlib\mpl-data\logs 的路徑中
 ```
-call D:\Files\Project\Stock_Crawler\execute\dist\crawler_stock\crawler_stock.exe -t C:\Users\YiQuan\Desktop\stock_info_list.txt -o D:\Files\Project\Output\stock
+call D:\Files\Project\Stock_Crawler\execute\dist\crawler_stock\crawler_stock.exe -t D:\Files\Project\Stock_Crawler\stock_info_list.txt -o D:\Files\Project\Output\stock
 ```
 
 ![alt text](https://imgur.com/FrI55tF.png)
